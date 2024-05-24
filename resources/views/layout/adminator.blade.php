@@ -1,10 +1,17 @@
-<!DOCTYPE html>
+<?php
+$avatar = 'https://api.dicebear.com/8.x/bottts/svg?seed='.session()->get("_token");
+$userName = 'John Doe';
+if(auth()->check()) {
+    $avatar = 'https://api.dicebear.com/8.x/bottts/svg?seed='.auth()->user()->username;
+    $userName = auth()->user()->name;
+}
+?><!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <title>@yield('title', 'Home') | {{ config('app.name') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         #loader {
             transition: all 0.3s ease-in-out;
@@ -58,8 +65,8 @@
             }
         }
     </style>
-    <script defer="defer" src="/adminator-assets/main.js"></script>
-    <link href="/adminator-assets/style.css" rel="stylesheet">
+    <script defer="defer" src="{{asset("/adminator-assets/main.js")}}"></script>
+    <link href="{{asset("/adminator-assets/style.css")}}" rel="stylesheet">
     @yield('header')
 </head>
 
@@ -135,7 +142,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="sidebar-link" href="/settings">
+                        <a class="sidebar-link" href="/admin/settings">
                             <span class="icon-holder">
                                 <i class="c-brown-500 ti-settings"></i>
                             </span>
@@ -143,7 +150,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="sidebar-link" href="/logout">
+                        <a class="sidebar-link" href="/auth/logout">
                             <span class="icon-holder">
                                 <i class="c-brown-500 ti-power-off"></i>
                             </span>
@@ -179,28 +186,28 @@
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="peer mR-10">
-                                    <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg" alt="">
+                                    <img class="w-2r bdrs-50p" src="{{ $avatar }}" alt="">
                                 </div>
                                 <div class="peer">
-                                    <span class="fsz-sm c-grey-900">John Doe</span>
+                                    <span class="fsz-sm c-grey-900">{{ $userName }}</span>
                                 </div>
                             </a>
                             <ul class="dropdown-menu fsz-sm" aria-labelledby="dropdownMenuLink">
                                 <li>
-                                    <a href="/settings" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                    <a href="/admin/settings" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i class="ti-settings mR-10"></i>
                                         <span>Setting</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                    <a href="/admin/profile" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i class="ti-user mR-10"></i>
                                         <span>Profile</span>
                                     </a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                    <a href="/auth/logout" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                                         <i class="ti-power-off mR-10"></i>
                                         <span>Logout</span>
                                     </a>
@@ -220,7 +227,7 @@
             
             <!-- ### $App Screen Footer ### -->
             <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
-                <span>Copyright © 2021 Adminator template Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. Laravel Boilerplate Starter-kit by <a href="https://github.com/gemul">Gemul</a>. All rights reserved.</span>
+                <span>Copyright © 2024 Laravel Boilerplate Starter-kit by <a href="https://gemaulamaputra.id">Gemul</a>. Adminator template Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
             </footer>
         </div>
     </div>
