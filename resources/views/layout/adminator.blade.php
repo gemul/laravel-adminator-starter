@@ -2,7 +2,7 @@
 $avatar = 'https://api.dicebear.com/8.x/bottts/svg?seed='.session()->get("_token");
 $userName = 'John Doe';
 if(auth()->check()) {
-    $avatar = 'https://api.dicebear.com/8.x/bottts/svg?seed='.auth()->user()->username;
+    $avatar = url('/storage/avatar/'.auth()->user()->avatar);
     $userName = auth()->user()->name;
 }
 ?><!DOCTYPE html>
